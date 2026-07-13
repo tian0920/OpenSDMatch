@@ -1,0 +1,68 @@
+# 稀疏行列清理报告
+
+- 输入文件：/home/ecs-user/merged_output/user_profiles_merged.csv
+- 输出文件：/home/ecs-user/merged_output/user_profiles_pruned.csv
+- 原始列数：169
+- 保留列数：52
+- 删除列数：117
+- 原始行数：34,085
+- 保留行数：25,561
+- 删除行数：8,524
+
+## 阈值
+- 删除列：空值率 >= 98%
+- 删除行：非空字段数 < 0 或填充率 < 50%
+- 保护列：company, display_name, email, mobile, name, position, real_name, source_tables, uid
+
+## 删除列示例
+- user_desc：非空 460，空值率 98.65%
+- accessory_achievementList_0：非空 449，空值率 98.68%
+- accessory_achievementList_1：非空 415，空值率 98.78%
+- accessory_achievementList_10：非空 3，空值率 99.99%
+- accessory_achievementList_11：非空 1，空值率 100.00%
+- accessory_achievementList_12：非空 1，空值率 100.00%
+- accessory_achievementList_13：非空 1，空值率 100.00%
+- accessory_achievementList_14：非空 1，空值率 100.00%
+- accessory_achievementList_15：非空 1，空值率 100.00%
+- accessory_achievementList_16：非空 1，空值率 100.00%
+- accessory_achievementList_17：非空 1，空值率 100.00%
+- accessory_achievementList_18：非空 1，空值率 100.00%
+- accessory_achievementList_19：非空 1，空值率 100.00%
+- accessory_achievementList_2：非空 318，空值率 99.07%
+- accessory_achievementList_3：非空 173，空值率 99.49%
+- accessory_achievementList_4：非空 79，空值率 99.77%
+- accessory_achievementList_5：非空 36，空值率 99.89%
+- accessory_achievementList_6：非空 14，空值率 99.96%
+- accessory_achievementList_7：非空 8，空值率 99.98%
+- accessory_achievementList_8：非空 6，空值率 99.98%
+- accessory_achievementList_9：非空 5，空值率 99.99%
+- accessory_honorList_0：非空 340，空值率 99.00%
+- accessory_honorList_1：非空 256，空值率 99.25%
+- accessory_honorList_10：非空 2，空值率 99.99%
+- accessory_honorList_11：非空 2，空值率 99.99%
+- accessory_honorList_12：非空 1，空值率 100.00%
+- accessory_honorList_13：非空 1，空值率 100.00%
+- accessory_honorList_2：非空 155，空值率 99.55%
+- accessory_honorList_3：非空 91，空值率 99.73%
+- accessory_honorList_4：非空 53，空值率 99.84%
+- accessory_honorList_5：非空 22，空值率 99.94%
+- accessory_honorList_6：非空 13，空值率 99.96%
+- accessory_honorList_7：非空 7，空值率 99.98%
+- accessory_honorList_8：非空 5，空值率 99.99%
+- accessory_honorList_9：非空 4，空值率 99.99%
+- accessory_publicationList_0：非空 357，空值率 98.95%
+- accessory_publicationList_1：非空 310，空值率 99.09%
+- accessory_publicationList_10：非空 19，空值率 99.94%
+- accessory_publicationList_11：非空 13，空值率 99.96%
+- accessory_publicationList_12：非空 10，空值率 99.97%
+- accessory_publicationList_13：非空 6，空值率 99.98%
+- accessory_publicationList_14：非空 4，空值率 99.99%
+- accessory_publicationList_15：非空 4，空值率 99.99%
+- accessory_publicationList_16：非空 2，空值率 99.99%
+- accessory_publicationList_17：非空 1，空值率 100.00%
+- accessory_publicationList_2：非空 242，空值率 99.29%
+- accessory_publicationList_3：非空 188，空值率 99.45%
+- accessory_publicationList_4：非空 147，空值率 99.57%
+- accessory_publicationList_5：非空 104，空值率 99.69%
+- accessory_publicationList_6：非空 72，空值率 99.79%
+- 其余 67 列见 dropped_sparse_columns.csv

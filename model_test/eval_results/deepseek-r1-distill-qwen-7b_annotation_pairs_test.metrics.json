@@ -1,0 +1,261 @@
+{
+  "metadata": {
+    "gold_csv": "/home/ecs-user/OpenSDMatch/model_test/gold/annotation_pairs_test.csv",
+    "predictions": "/home/ecs-user/OpenSDMatch/model_test/model_outputs/deepseek-r1-distill-qwen-7b_annotation_pairs_test.compact.jsonl",
+    "gold_rows": 2805,
+    "prediction_rows": 2805,
+    "evaluated_rows": 2779,
+    "missing_predictions": [],
+    "invalid_predictions": [
+      "ANN_00212",
+      "ANN_00526",
+      "ANN_00673",
+      "ANN_00720",
+      "ANN_00786",
+      "ANN_01092",
+      "ANN_01411",
+      "ANN_01613",
+      "ANN_01819",
+      "ANN_01894",
+      "ANN_01963",
+      "ANN_01981",
+      "ANN_02146",
+      "ANN_02191",
+      "ANN_02249",
+      "ANN_02423",
+      "ANN_02479",
+      "ANN_02490",
+      "ANN_02520",
+      "ANN_02689",
+      "ANN_02740",
+      "ANN_02800",
+      "ANN_02821",
+      "ANN_02918",
+      "ANN_00174",
+      "ANN_00345"
+    ]
+  },
+  "task_1_opportunity_detection": {
+    "macro_f1": 0.3780164317842401,
+    "confusion_matrix": {
+      "labels": [
+        "No",
+        "Yes"
+      ],
+      "rows_gold_cols_pred": [
+        [
+          237,
+          1582
+        ],
+        [
+          43,
+          917
+        ]
+      ]
+    },
+    "per_class": {
+      "No": {
+        "precision": 0.8464285714285714,
+        "recall": 0.1302913688840022,
+        "f1": 0.22582181991424488,
+        "support": 1819,
+        "tp": 237,
+        "fp": 43,
+        "fn": 1582
+      },
+      "Yes": {
+        "precision": 0.36694677871148457,
+        "recall": 0.9552083333333333,
+        "f1": 0.5302110436542353,
+        "support": 960,
+        "tp": 917,
+        "fp": 1582,
+        "fn": 43
+      }
+    }
+  },
+  "task_2_binary_opportunity_detection": {
+    "precision": 0.36694677871148457,
+    "recall": 0.9552083333333333,
+    "f1": 0.5302110436542353,
+    "mcc": 0.1350686081126717,
+    "tp": 917,
+    "tn": 237,
+    "fp": 1582,
+    "fn": 43
+  },
+  "task_3_opportunity_score": {
+    "condition": "gold has_opportunity == Yes",
+    "support": 960,
+    "conditional_score_accuracy": 0.7916666666666666,
+    "score_macro_f1": 0.46617347933907327,
+    "per_class": {
+      "1": {
+        "precision": 0.03007518796992481,
+        "recall": 0.11428571428571428,
+        "f1": 0.04761904761904762,
+        "support": 35,
+        "tp": 4,
+        "fp": 129,
+        "fn": 31
+      },
+      "2": {
+        "precision": 0.9642857142857143,
+        "recall": 0.8172972972972973,
+        "f1": 0.8847279110590989,
+        "support": 925,
+        "tp": 756,
+        "fp": 28,
+        "fn": 169
+      }
+    }
+  },
+  "task_4_role_direction": {
+    "condition": "gold has_opportunity == Yes",
+    "support": 960,
+    "conditional_direction_accuracy": 0.3927083333333333,
+    "direction_macro_f1": 0.27336996336996333,
+    "per_class": {
+      "A_to_B": {
+        "precision": 0.17666666666666667,
+        "recall": 0.3419354838709677,
+        "f1": 0.23296703296703297,
+        "support": 155,
+        "tp": 53,
+        "fp": 247,
+        "fn": 102
+      },
+      "B_to_A": {
+        "precision": 0.9145907473309609,
+        "recall": 0.3703170028818444,
+        "f1": 0.5271794871794871,
+        "support": 694,
+        "tp": 257,
+        "fp": 24,
+        "fn": 437
+      },
+      "Bidirectional": {
+        "precision": 0.23024054982817868,
+        "recall": 0.6036036036036037,
+        "f1": 0.33333333333333337,
+        "support": 111,
+        "tp": 67,
+        "fp": 224,
+        "fn": 44
+      },
+      "Unclear": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 30,
+        "fn": 0
+      }
+    }
+  },
+  "task_5_cooperation_type": {
+    "condition": "gold has_opportunity == Yes",
+    "support": 960,
+    "conditional_type_macro_f1": 0.22733404994865322,
+    "per_class_f1": {
+      "供应与生产合作": 0.40145102781136643,
+      "营销与分销合作": 0.29925187032418954,
+      "许可与技术转移合作": 0.03846153846153846,
+      "研发与共同开发合作": 0.3521739130434782,
+      "资本与股权合作": 0.5,
+      "其他": 0.0,
+      "None": 0.0
+    },
+    "per_class": {
+      "供应与生产合作": {
+        "precision": 0.8645833333333334,
+        "recall": 0.2614173228346457,
+        "f1": 0.40145102781136643,
+        "support": 635,
+        "tp": 166,
+        "fp": 26,
+        "fn": 469
+      },
+      "营销与分销合作": {
+        "precision": 0.20833333333333334,
+        "recall": 0.5309734513274337,
+        "f1": 0.29925187032418954,
+        "support": 113,
+        "tp": 60,
+        "fp": 228,
+        "fn": 53
+      },
+      "许可与技术转移合作": {
+        "precision": 0.10526315789473684,
+        "recall": 0.023529411764705882,
+        "f1": 0.03846153846153846,
+        "support": 85,
+        "tp": 2,
+        "fp": 17,
+        "fn": 83
+      },
+      "研发与共同开发合作": {
+        "precision": 0.23275862068965517,
+        "recall": 0.7232142857142857,
+        "f1": 0.3521739130434782,
+        "support": 112,
+        "tp": 81,
+        "fp": 267,
+        "fn": 31
+      },
+      "资本与股权合作": {
+        "precision": 0.6666666666666666,
+        "recall": 0.4,
+        "f1": 0.5,
+        "support": 15,
+        "tp": 6,
+        "fp": 3,
+        "fn": 9
+      },
+      "其他": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 19,
+        "fn": 0
+      },
+      "None": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 61,
+        "fn": 0
+      }
+    }
+  },
+  "task_6_joint_prediction": {
+    "opportunity_score_direction_type_exact_match": 0.1309823677581864,
+    "opportunity_score_direction_type_exact_match_on_gold_positive": 0.13229166666666667
+  },
+  "task_7_reliability": {
+    "confidence_accuracy_target": "match",
+    "confidence_accuracy_curve": [
+      {
+        "confidence": 1,
+        "n": 493,
+        "accuracy": 0.4726166328600406,
+        "errors": 260
+      },
+      {
+        "confidence": 2,
+        "n": 2184,
+        "accuracy": 0.38324175824175827,
+        "errors": 1347
+      }
+    ],
+    "high_confidence_threshold": 2,
+    "high_confidence_count": 2184,
+    "high_confidence_opportunity_error_rate": 0.6167582417582418,
+    "high_confidence_joint_error_rate": 0.9418498168498168
+  }
+}

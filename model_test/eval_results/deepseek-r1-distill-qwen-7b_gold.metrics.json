@@ -1,0 +1,413 @@
+{
+  "metadata": {
+    "gold_csv": "/home/ecs-user/OpenSDMatch/model_test/gold/annotation_pairs_blind.csv",
+    "predictions": "/home/ecs-user/OpenSDMatch/model_test/model_outputs/deepseek-r1-distill-qwen-7b_gold.compact.jsonl",
+    "gold_rows": 148,
+    "prediction_rows": 148,
+    "evaluated_rows": 0,
+    "missing_predictions": [],
+    "invalid_predictions": [
+      "ANN_00002",
+      "ANN_00004",
+      "ANN_00005",
+      "ANN_00007",
+      "ANN_00008",
+      "ANN_00010",
+      "ANN_00011",
+      "ANN_00012",
+      "ANN_00013",
+      "ANN_00014",
+      "ANN_00015",
+      "ANN_00016",
+      "ANN_00017",
+      "ANN_00018",
+      "ANN_00019",
+      "ANN_00020",
+      "ANN_00021",
+      "ANN_00022",
+      "ANN_00023",
+      "ANN_00024",
+      "ANN_00025",
+      "ANN_00026",
+      "ANN_00027",
+      "ANN_00028",
+      "ANN_00029",
+      "ANN_00030",
+      "ANN_00031",
+      "ANN_00032",
+      "ANN_00033",
+      "ANN_00034",
+      "ANN_00035",
+      "ANN_00036",
+      "ANN_00037",
+      "ANN_00038",
+      "ANN_00039",
+      "ANN_00040",
+      "ANN_00041",
+      "ANN_00042",
+      "ANN_00043",
+      "ANN_00044",
+      "ANN_00045",
+      "ANN_00046",
+      "ANN_00049",
+      "ANN_00050",
+      "ANN_00051",
+      "ANN_00052",
+      "ANN_00053",
+      "ANN_00054",
+      "ANN_00055",
+      "ANN_00056",
+      "ANN_00057",
+      "ANN_00058",
+      "ANN_00059",
+      "ANN_00060",
+      "ANN_00061",
+      "ANN_00062",
+      "ANN_00063",
+      "ANN_00064",
+      "ANN_00065",
+      "ANN_00066",
+      "ANN_00067",
+      "ANN_00068",
+      "ANN_00069",
+      "ANN_00070",
+      "ANN_00071",
+      "ANN_00072",
+      "ANN_00073",
+      "ANN_00074",
+      "ANN_00075",
+      "ANN_00076",
+      "ANN_00077",
+      "ANN_00078",
+      "ANN_00079",
+      "ANN_00080",
+      "ANN_00081",
+      "ANN_00082",
+      "ANN_00083",
+      "ANN_00084",
+      "ANN_00085",
+      "ANN_00086",
+      "ANN_00087",
+      "ANN_00088",
+      "ANN_00089",
+      "ANN_00090",
+      "ANN_00091",
+      "ANN_00092",
+      "ANN_00093",
+      "ANN_00094",
+      "ANN_00095",
+      "ANN_00096",
+      "ANN_00097",
+      "ANN_00098",
+      "ANN_00099",
+      "ANN_00100",
+      "ANN_00101",
+      "ANN_00102",
+      "ANN_00103",
+      "ANN_00104",
+      "ANN_00105",
+      "ANN_00106",
+      "ANN_00107",
+      "ANN_00108",
+      "ANN_00109",
+      "ANN_00110",
+      "ANN_00111",
+      "ANN_00112",
+      "ANN_00113",
+      "ANN_00114",
+      "ANN_00115",
+      "ANN_00116",
+      "ANN_00117",
+      "ANN_00118",
+      "ANN_00119",
+      "ANN_00120",
+      "ANN_00121",
+      "ANN_00122",
+      "ANN_00123",
+      "ANN_00124",
+      "ANN_00125",
+      "ANN_00126",
+      "ANN_00127",
+      "ANN_00128",
+      "ANN_00129",
+      "ANN_00130",
+      "ANN_00131",
+      "ANN_00132",
+      "ANN_00133",
+      "ANN_00134",
+      "ANN_00135",
+      "ANN_00136",
+      "ANN_00137",
+      "ANN_00138",
+      "ANN_00139",
+      "ANN_00140",
+      "ANN_00141",
+      "ANN_00142",
+      "ANN_00143",
+      "ANN_00144",
+      "ANN_00145",
+      "ANN_00146",
+      "ANN_00147",
+      "ANN_00148",
+      "ANN_00149",
+      "ANN_00150",
+      "ANN_00151",
+      "ANN_00152",
+      "ANN_00154",
+      "ANN_00155"
+    ]
+  },
+  "task_1_match_classification": {
+    "macro_f1": 0.0,
+    "quadratic_weighted_kappa": 0.0,
+    "confusion_matrix": {
+      "labels": [
+        0,
+        1,
+        2
+      ],
+      "rows_gold_cols_pred": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "per_class": {
+      "0": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "1": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "2": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  "task_2_binary_match_detection": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "mcc": 0.0,
+    "tp": 0,
+    "tn": 0,
+    "fp": 0,
+    "fn": 0
+  },
+  "task_3_direction_reasoning": {
+    "condition": "gold label_match in {1, 2}",
+    "support": 0,
+    "conditional_direction_accuracy": 0.0,
+    "direction_macro_f1": 0.0,
+    "per_class": {
+      "A_supplies_B": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "B_supplies_A": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "Bidirectional": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "Unclear": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  "task_4_cooperation_type_prediction": {
+    "condition": "gold label_match in {1, 2}",
+    "support": 0,
+    "conditional_type_macro_f1": 0.0,
+    "per_class_f1": {
+      "采购/销售": 0.0,
+      "渠道合作": 0.0,
+      "技术服务": 0.0,
+      "联合研发": 0.0,
+      "资源对接": 0.0,
+      "投融资": 0.0,
+      "招商合作": 0.0,
+      "其他": 0.0,
+      "不匹配": 0.0
+    },
+    "per_class": {
+      "采购/销售": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "渠道合作": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "技术服务": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "联合研发": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "资源对接": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "投融资": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "招商合作": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "其他": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "不匹配": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      }
+    }
+  },
+  "task_5_joint_prediction": {
+    "match_direction_type_exact_match": 0.0,
+    "match_direction_type_exact_match_on_gold_positive": 0.0
+  },
+  "task_6_reliability": {
+    "confidence_accuracy_target": "match",
+    "confidence_accuracy_curve": [
+      {
+        "confidence": 1,
+        "n": 0,
+        "accuracy": 0.0,
+        "errors": 0
+      },
+      {
+        "confidence": 2,
+        "n": 0,
+        "accuracy": 0.0,
+        "errors": 0
+      },
+      {
+        "confidence": 3,
+        "n": 0,
+        "accuracy": 0.0,
+        "errors": 0
+      },
+      {
+        "confidence": 4,
+        "n": 0,
+        "accuracy": 0.0,
+        "errors": 0
+      },
+      {
+        "confidence": 5,
+        "n": 0,
+        "accuracy": 0.0,
+        "errors": 0
+      }
+    ],
+    "high_confidence_threshold": 4,
+    "high_confidence_count": 0,
+    "high_confidence_match_error_rate": 0.0,
+    "high_confidence_joint_error_rate": 0.0
+  }
+}

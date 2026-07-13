@@ -1,0 +1,13 @@
+﻿deleted_at,file,data_rows,bytes
+2026-06-07T14:44:07,/home/ecs-user/analysis_output_cleaned/cleaned_csv/t_chatroom.csv,4,403
+2026-06-07T14:44:07,/home/ecs-user/analysis_output_cleaned/cleaned_csv/t_dictionary.csv,8,1022
+2026-06-07T14:44:07,/home/ecs-user/analysis_output_cleaned/cleaned_csv/t_favorites.csv,7,61653
+2026-06-07T14:44:07,/home/ecs-user/analysis_output_cleaned/cleaned_csv/t_goods.csv,5,583
+2026-06-07T14:44:07,/home/ecs-user/analysis_output_cleaned/cleaned_csv/t_goods_spec.csv,5,633
+2026-06-07T14:44:07,/home/ecs-user/analysis_output_cleaned/cleaned_csv/t_promotion_org.csv,1,157
+2026-06-07T14:44:07,/home/ecs-user/analysis_output_cleaned/cleaned_csv/t_promotion_org_contract.csv,1,214
+2026-06-07T14:44:07,/home/ecs-user/analysis_output_cleaned/cleaned_csv/t_robot.csv,2,172
+2026-06-07T14:44:07,/home/ecs-user/analysis_output_cleaned/cleaned_csv/t_sys_level.csv,4,93
+2026-06-07T14:44:07,/home/ecs-user/analysis_output_cleaned/cleaned_csv/t_user_notify_info.csv,4,513
+2026-06-07T14:44:07,/home/ecs-user/analysis_output_cleaned/cleaned_csv/text.csv,7,936
+2026-06-07T14:44:07,/home/ecs-user/analysis_output_cleaned/cleaned_csv/wx_msg_reply_rule.csv,2,733

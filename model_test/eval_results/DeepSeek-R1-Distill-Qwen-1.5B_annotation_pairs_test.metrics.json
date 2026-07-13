@@ -1,0 +1,304 @@
+{
+  "metadata": {
+    "gold_csv": "/home/ecs-user/OpenSDMatch/model_test/gold/annotation_pairs_test.csv",
+    "predictions": "/home/ecs-user/OpenSDMatch/model_test/model_outputs/DeepSeek-R1-Distill-Qwen-1.5B_annotation_pairs_test.compact.jsonl",
+    "gold_rows": 2805,
+    "prediction_rows": 2805,
+    "evaluated_rows": 2736,
+    "missing_predictions": [],
+    "invalid_predictions": [
+      "ANN_00049",
+      "ANN_00195",
+      "ANN_00218",
+      "ANN_00050",
+      "ANN_00232",
+      "ANN_00242",
+      "ANN_00297",
+      "ANN_00377",
+      "ANN_00511",
+      "ANN_00578",
+      "ANN_00667",
+      "ANN_00786",
+      "ANN_00816",
+      "ANN_00886",
+      "ANN_00911",
+      "ANN_00942",
+      "ANN_00985",
+      "ANN_01009",
+      "ANN_01069",
+      "ANN_01124",
+      "ANN_01417",
+      "ANN_01547",
+      "ANN_01560",
+      "ANN_01606",
+      "ANN_01680",
+      "ANN_01704",
+      "ANN_01707",
+      "ANN_01749",
+      "ANN_01771",
+      "ANN_01798",
+      "ANN_01825",
+      "ANN_01946",
+      "ANN_01947",
+      "ANN_02009",
+      "ANN_02016",
+      "ANN_02018",
+      "ANN_02065",
+      "ANN_02067",
+      "ANN_02083",
+      "ANN_02114",
+      "ANN_02262",
+      "ANN_02319",
+      "ANN_02346",
+      "ANN_02443",
+      "ANN_02484",
+      "ANN_02505",
+      "ANN_02513",
+      "ANN_02603",
+      "ANN_02650",
+      "ANN_02664",
+      "ANN_02701",
+      "ANN_02724",
+      "ANN_02772",
+      "ANN_02776",
+      "ANN_02801",
+      "ANN_02804",
+      "ANN_02956",
+      "ANN_00165",
+      "ANN_00330",
+      "ANN_00357",
+      "ANN_00495",
+      "ANN_00500",
+      "ANN_00516",
+      "ANN_00525",
+      "ANN_00699",
+      "ANN_00775",
+      "ANN_00847",
+      "ANN_01017",
+      "ANN_01126"
+    ]
+  },
+  "task_1_opportunity_detection": {
+    "macro_f1": 0.4482304956691976,
+    "confusion_matrix": {
+      "labels": [
+        "No",
+        "Yes"
+      ],
+      "rows_gold_cols_pred": [
+        [
+          721,
+          1071
+        ],
+        [
+          430,
+          514
+        ]
+      ]
+    },
+    "per_class": {
+      "No": {
+        "precision": 0.6264118158123371,
+        "recall": 0.40234375,
+        "f1": 0.489976214746857,
+        "support": 1792,
+        "tp": 721,
+        "fp": 430,
+        "fn": 1071
+      },
+      "Yes": {
+        "precision": 0.32429022082018927,
+        "recall": 0.5444915254237288,
+        "f1": 0.4064847765915382,
+        "support": 944,
+        "tp": 514,
+        "fp": 1071,
+        "fn": 430
+      }
+    }
+  },
+  "task_2_binary_opportunity_detection": {
+    "precision": 0.32429022082018927,
+    "recall": 0.5444915254237288,
+    "f1": 0.4064847765915382,
+    "mcc": -0.0511948497859193,
+    "tp": 514,
+    "tn": 721,
+    "fp": 1071,
+    "fn": 430
+  },
+  "task_3_opportunity_score": {
+    "condition": "gold has_opportunity == Yes",
+    "support": 944,
+    "conditional_score_accuracy": 0.510593220338983,
+    "score_macro_f1": 0.3408769448373408,
+    "per_class": {
+      "1": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 35,
+        "tp": 0,
+        "fp": 2,
+        "fn": 35
+      },
+      "2": {
+        "precision": 0.9544554455445544,
+        "recall": 0.5302530253025303,
+        "f1": 0.6817538896746816,
+        "support": 909,
+        "tp": 482,
+        "fp": 23,
+        "fn": 427
+      }
+    }
+  },
+  "task_4_role_direction": {
+    "condition": "gold has_opportunity == Yes",
+    "support": 944,
+    "conditional_direction_accuracy": 0.12182203389830508,
+    "direction_macro_f1": 0.1054709136936812,
+    "per_class": {
+      "A_to_B": {
+        "precision": 0.15088757396449703,
+        "recall": 0.33116883116883117,
+        "f1": 0.2073170731707317,
+        "support": 154,
+        "tp": 51,
+        "fp": 287,
+        "fn": 103
+      },
+      "B_to_A": {
+        "precision": 0.6276595744680851,
+        "recall": 0.08676470588235294,
+        "f1": 0.15245478036175708,
+        "support": 680,
+        "tp": 59,
+        "fp": 35,
+        "fn": 621
+      },
+      "Bidirectional": {
+        "precision": 0.09803921568627451,
+        "recall": 0.045454545454545456,
+        "f1": 0.062111801242236024,
+        "support": 110,
+        "tp": 5,
+        "fp": 46,
+        "fn": 105
+      },
+      "Unclear": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 9,
+        "fn": 0
+      }
+    }
+  },
+  "task_5_cooperation_type": {
+    "condition": "gold has_opportunity == Yes",
+    "support": 944,
+    "conditional_type_macro_f1": 0.1013380086969804,
+    "per_class_f1": {
+      "供应与生产合作": 0.15602836879432624,
+      "营销与分销合作": 0.17557251908396945,
+      "许可与技术转移合作": 0.12195121951219512,
+      "研发与共同开发合作": 0.25581395348837205,
+      "资本与股权合作": 0.0,
+      "其他": 0.0,
+      "None": 0.0
+    },
+    "per_class": {
+      "供应与生产合作": {
+        "precision": 0.6470588235294118,
+        "recall": 0.08870967741935484,
+        "f1": 0.15602836879432624,
+        "support": 620,
+        "tp": 55,
+        "fp": 30,
+        "fn": 565
+      },
+      "营销与分销合作": {
+        "precision": 0.15333333333333332,
+        "recall": 0.20535714285714285,
+        "f1": 0.17557251908396945,
+        "support": 112,
+        "tp": 23,
+        "fp": 127,
+        "fn": 89
+      },
+      "许可与技术转移合作": {
+        "precision": 0.1282051282051282,
+        "recall": 0.11627906976744186,
+        "f1": 0.12195121951219512,
+        "support": 86,
+        "tp": 10,
+        "fp": 68,
+        "fn": 76
+      },
+      "研发与共同开发合作": {
+        "precision": 0.36065573770491804,
+        "recall": 0.1981981981981982,
+        "f1": 0.25581395348837205,
+        "support": 111,
+        "tp": 22,
+        "fp": 39,
+        "fn": 89
+      },
+      "资本与股权合作": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 15,
+        "tp": 0,
+        "fp": 1,
+        "fn": 15
+      },
+      "其他": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 3,
+        "fn": 0
+      },
+      "None": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0,
+        "tp": 0,
+        "fp": 438,
+        "fn": 0
+      }
+    }
+  },
+  "task_6_joint_prediction": {
+    "opportunity_score_direction_type_exact_match": 0.2711988304093567,
+    "opportunity_score_direction_type_exact_match_on_gold_positive": 0.022245762711864406
+  },
+  "task_7_reliability": {
+    "confidence_accuracy_target": "match",
+    "confidence_accuracy_curve": [
+      {
+        "confidence": 1,
+        "n": 263,
+        "accuracy": 0.5437262357414449,
+        "errors": 120
+      },
+      {
+        "confidence": 2,
+        "n": 1577,
+        "accuracy": 0.32466708941027267,
+        "errors": 1065
+      }
+    ],
+    "high_confidence_threshold": 2,
+    "high_confidence_count": 1577,
+    "high_confidence_opportunity_error_rate": 0.6753329105897273,
+    "high_confidence_joint_error_rate": 0.9816106531388713
+  }
+}
