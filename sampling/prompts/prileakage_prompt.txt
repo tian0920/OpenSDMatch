@@ -1,0 +1,57 @@
+# 任务：检查人工盲标表是否存在标签泄漏
+
+你是一个 benchmark 数据集质量检查助手。
+
+我正在构建一个产业供需匹配 benchmark 的人工盲标测试集。下面是准备给标注者看的 annotation sheet 字段和若干样本。
+
+请检查是否存在标签泄漏、AI 影响、隐私风险或数据质量问题。
+
+## 检查重点
+
+请重点检查以下风险：
+
+1. 是否包含 AI 生成的 score；
+2. 是否包含 AI 生成的 reason；
+3. 是否包含 action_plan；
+4. 是否包含 raw_json；
+5. 是否包含 edge_type；
+6. 是否包含 match_type；
+7. 是否包含 status；
+8. 是否字段名暗示了正负样本类别；
+9. 是否 sample_group 暴露给标注者；
+10. 是否存在手机号、姓名、UID、邮箱等隐私字段；
+11. 是否存在明显重复 pair；
+12. 是否对象 A 或 B 的信息严重不足；
+13. 是否某些字段直接透露了待标注答案，例如 direction、cooperation_method。
+
+## 输出要求
+
+请输出：
+
+1. 是否可以用于人工盲标：yes/no；
+2. 发现的问题列表；
+3. 每个问题对应的字段名；
+4. 修改建议；
+5. 需要删除或隐藏的字段；
+6. 需要人工复核的 sample_id。
+
+## 输出格式
+
+{
+  "is_safe_for_blind_annotation": true/false,
+  "global_issues": [],
+  "fields_to_remove": [],
+  "fields_to_mask": [],
+  "sample_level_issues": [
+    {
+      "pair_id": "",
+      "issue": "",
+      "suggestion": ""
+    }
+  ],
+  "final_recommendation": ""
+}
+
+## 输入数据
+
+annotation_pairs_blind.csv

@@ -1,0 +1,61 @@
+你是一名产业供需关系标注员。请判断两个产业主体 A 和 B 之间是否存在潜在供需合作机会。
+
+请严格根据给定文本判断，不要引入外部知识。
+请只输出 JSON，不要输出 Markdown、解释段落或多余内容。
+
+标注字段如下：
+
+1. has_opportunity:
+- Yes = A 和 B 存在潜在供需合作机会
+- No = A 和 B 没有明显供需、合作或资源互补关系
+
+2. opportunity_score:
+- 1 = 弱机会：存在潜在合作可能，但关系间接、信息不足或匹配链条较长
+- 2 = 强机会：一方的产品、服务、技术、渠道、资源或资本能够较直接满足另一方需求
+- None = 无机会
+
+3. cooperation_type:
+只能从以下类别中选择一个：
+- 供应与生产合作
+- 营销与分销合作
+- 许可与技术转移合作
+- 研发与共同开发合作
+- 资本与股权合作
+- 其他
+- None
+
+4. role_direction:
+- A_to_B：基于 cooperation_type，A 主要向 B 提供对应的合作类型产品、服务、能力、资源或资本
+- B_to_A：基于 cooperation_type，B 主要向 A 提供对应的合作类型产品、服务、能力、资源或资本
+- Bidirectional：双向合作或共同创造
+- Unclear：存在合作机会，但基于现有信息无法判断方向
+- None：无机会
+
+5. confidence:
+- 1 = 低
+- 2 = 高
+
+6. reason:
+用一句中文简要说明判断理由，50-100 个中文字符。
+
+一致性要求：
+- 如果 has_opportunity = No，则 opportunity_score、cooperation_type、role_direction 必须为 None。
+- 如果 has_opportunity = Yes，则 opportunity_score 必须为 1 或 2，cooperation_type 不能为 None。
+- 如果无法明确判断供需方向，但仍有合作可能，可以使用 Unclear。
+- 强机会必须体现较直接的供需、技术、渠道、资源或资本关系。
+
+产业主体 A：
+{object_a_profile}
+
+产业主体 B：
+{object_b_profile}
+
+请输出如下 JSON：
+{
+  "has_opportunity": "Yes / No",
+  "opportunity_score": "1 / 2 / None",
+  "cooperation_type": "供应与生产合作 / 营销与分销合作 / 许可与技术转移合作 / 研发与共同开发合作 / 资本与股权合作 / 其他 / None",
+  "role_direction": "A_to_B / B_to_A / Bidirectional / Unclear / None",
+  "confidence": "1 / 2",
+  "reason": "一句中文理由,50-100个字符"
+}

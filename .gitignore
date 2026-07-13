@@ -1,0 +1,63 @@
+# Python/runtime caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Local environments and packaged environments
+.venv/
+venv/
+env/
+*.conda
+*.tar.gz
+
+# Large local models and downloaded artifacts
+models/
+*.safetensors
+*.pth
+*.pt
+*.bin
+*.onnx
+*.gguf
+*.tiktoken
+
+# Data exports, generated datasets, and analysis outputs
+*.zip
+*.csv
+*.jsonl
+*.claims.json
+*.parquet
+*.sqlite
+*.db
+analysis_output_cleaned/
+merged_output/
+supply_demand_output/
+sampling/data/*.csv
+sampling/outputs/
+model_test/model_outputs/
+model_test/eval_results/
+model_test/gold/
+
+# Logs, pid files, tunnels, and local service state
+*.log
+*.pid
+logs/
+run/
+sampling/logs/
+sampling/run/
+sampling/annotation_public_url.txt
+sampling/annotation_tunnel.*
+sampling/annotation_web.*
+
+# Local tools and binary downloads
+.tools/
+bin/
+cursor-sandbox-apparmor.deb*
+
+# Secrets/local overrides
+.env
+.env.*
+!.env.example
