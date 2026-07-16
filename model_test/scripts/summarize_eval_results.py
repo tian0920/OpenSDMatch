@@ -77,10 +77,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--export-static",
         action="store_true",
-        help="Write CSV/HTML files once and exit instead of starting the web page server.",
+        help="Write CSV/HTML/JSON files once and exit instead of starting the web page server.",
     )
     parser.add_argument("--csv", type=Path, default=None, help="CSV output path for --export-static.")
     parser.add_argument("--html", type=Path, default=None, help="HTML output path for --export-static.")
+    parser.add_argument(
+        "--json",
+        dest="output_json",
+        type=Path,
+        default=None,
+        help="JSON output path for --export-static.",
+    )
     parser.add_argument(
         "--list-models",
         action="store_true",
@@ -166,7 +173,7 @@ def flatten_metrics(value: Any, prefix: str = "") -> dict[str, Any]:
 
 def load_rows(eval_dir: Path) -> list[dict[str, Any]]:
     rows = []
-    for path in sorted(eval_dir.glob("*.json")):
+    for path in sorted(eval_dir.glob("*.metrics.json")):
         with path.open(encoding="utf-8") as handle:
             data = json.load(handle)
         rows.append(
@@ -216,6 +223,14 @@ def write_csv(path: Path, metrics: list[str], rows: list[dict[str, Any]]) -> Non
             writer.writerow(
                 [row["model"], *[format_value(row["metrics"].get(metric)) for metric in metrics]]
             )
+
+
+def write_json(path: Path, metrics: list[str], rows: list[dict[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(build_payload(metrics, rows), ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
 
 
 def write_markdown(path: Path, metrics: list[str], rows: list[dict[str, Any]]) -> None:
@@ -734,12 +749,15 @@ def main() -> int:
         output_dir = args.output_dir or args.eval_dir
         csv_path = args.csv or output_dir / f"{args.output_basename}.csv"
         html_path = args.html or output_dir / f"{args.output_basename}.html"
+        json_path = args.output_json or output_dir / f"{args.output_basename}.json"
         default_csv_name = f"{args.output_basename}.csv"
 
         write_csv(csv_path, metrics, selected_rows)
+        write_json(json_path, metrics, selected_rows)
         write_html(html_path, metrics, selected_rows, default_csv_name)
 
         print(f"Wrote CSV: {csv_path}")
+        print(f"Wrote JSON: {json_path}")
         print(f"Wrote HTML: {html_path}")
         print(f"Models: {len(selected_rows)}")
         print(f"Metrics: {len(metrics)}")

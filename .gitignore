@@ -1,6 +1,10 @@
 # Keep local model downloads out of Git.
 models/
 
+# Keep generated prediction/evaluation artifacts out of Git.
+model_test/model_outputs/
+model_test/eval_results/
+
 # Python/runtime caches
 __pycache__/
 *.py[cod]
@@ -40,6 +44,7 @@ sampling/data/*.csv
 sampling/annotation_pairs*.csv
 sampling/annotation_pairs*.json
 model_test/annotation_pairs_test.csv
+model_test/gold/**/*.csv
 model_test/gold/*.csv
 
 # Secrets/local overrides

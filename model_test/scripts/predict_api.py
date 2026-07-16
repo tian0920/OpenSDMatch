@@ -18,9 +18,10 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "model_test" / "gold" / "annotation_pairs_test.csv"
-DEFAULT_PROMPT = ROOT / "model_test" / "prompts" / "sd_model_predict_label"
-DEFAULT_OUTPUT_DIR = ROOT / "model_test" / "model_outputs"
+TYPE = "english"
+DEFAULT_INPUT = ROOT / "model_test" / "gold" / TYPE / "annotation_pairs_test.csv"
+DEFAULT_PROMPT = ROOT / "model_test" / "prompts" / TYPE / "sd_model_predict_label"
+DEFAULT_OUTPUT_DIR = ROOT / "model_test" / "model_outputs" /TYPE
 DEFAULT_BASE_URL = "https://llm-jhxtd03gjg0gd2o2.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1"
 DEFAULT_MODELS = [
     # "deepseek-v3.2",
@@ -30,9 +31,10 @@ DEFAULT_MODELS = [
     # "qwen3.7-plus",
     # "qwen3.6-27b",
     # "glm-5.2",
-    "kimi-k2.7-code",
-    # "glm-5.1",
-    # "deepseek-v4-flash",
+    # "kimi-k2.7-code",
+    "glm-5.1",
+    "deepseek-v4-flash",
+    # "qwen3-coder-flash",
 ]
 
 LABEL_COLUMNS = [

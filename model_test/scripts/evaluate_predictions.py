@@ -13,10 +13,12 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[2]
-
-DEFAULT_GOLD_CSV = ROOT / "model_test" / "gold" / "annotation_pairs_test.csv"
-DEFAULT_EVAL_DIR = ROOT / "model_test" / "eval_results"
-DEFAULT_PREDICTIONS_DIR = ROOT / "model_test" / "model_outputs"
+TYPE = "english"
+DEFAULT_GOLD_CSV = ROOT / "model_test" / "gold" / TYPE / "annotation_pairs_test.csv"
+DEFAULT_EVAL_DIR = ROOT / "model_test" / "eval_results" / TYPE
+DEFAULT_PREDICTIONS_DIR = ROOT / "model_test" / "model_outputs" / TYPE
+DEFAULT_SUMMARY_JSON = DEFAULT_EVAL_DIR / "summary.json"
+DEFAULT_SUMMARY_CSV = DEFAULT_EVAL_DIR / "eval_metrics_summary.csv"
 
 # 默认自动评估 model_outputs 下所有 *.compact.jsonl。
 # 如需在源码中固定一批文件名，可在这里填写；命令行的
@@ -101,6 +103,120 @@ def default_output_path(predictions_path: Path, suffix: str) -> Path:
     if stem.endswith(".compact"):
         stem = stem[: -len(".compact")]
     return DEFAULT_EVAL_DIR / f"{stem}.metrics.{suffix}"
+
+
+def model_name_from_metrics_path(metrics_path: Path) -> str:
+    stem = metrics_path.stem
+    if stem.endswith(".metrics"):
+        stem = stem[: -len(".metrics")]
+    return stem
+
+
+def flatten_metrics(value: Any, prefix: str = "") -> dict[str, Any]:
+    flat: dict[str, Any] = {}
+
+    if isinstance(value, dict):
+        for key, item in value.items():
+            path = f"{prefix}.{key}" if prefix else str(key)
+            flat.update(flatten_metrics(item, path))
+        return flat
+
+    if isinstance(value, list):
+        if prefix.endswith(("missing_predictions", "invalid_predictions")):
+            flat[f"{prefix}.count"] = len(value)
+            return flat
+
+        if all(isinstance(item, dict) for item in value):
+            for index, item in enumerate(value):
+                label = item.get("confidence", index)
+                path = f"{prefix}.confidence_{label}" if "confidence" in item else f"{prefix}.{index}"
+                flat.update(flatten_metrics(item, path))
+            return flat
+
+        if all(isinstance(item, list) for item in value):
+            for row_index, row in enumerate(value):
+                for col_index, item in enumerate(row):
+                    flat.update(flatten_metrics(item, f"{prefix}.row_{row_index}.col_{col_index}"))
+            return flat
+
+        if prefix:
+            flat[f"{prefix}.count"] = len(value)
+        return flat
+
+    if isinstance(value, (str, int, float, bool)) or value is None:
+        flat[prefix] = value
+    return flat
+
+
+def summary_metrics(rows: list[dict[str, Any]]) -> list[str]:
+    return sorted({metric for row in rows for metric in row["metrics"]})
+
+
+def format_summary_value(value: Any) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    if isinstance(value, float):
+        if not math.isfinite(value):
+            return str(value)
+        return f"{value:.6g}"
+    return str(value)
+
+
+def write_summary_json(path: Path, rows: list[dict[str, Any]]) -> None:
+    metrics = summary_metrics(rows)
+    payload = {
+        "models": [row["model"] for row in rows],
+        "metrics": metrics,
+        "rows": rows,
+    }
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    print(f"Wrote summary JSON to {path}")
+
+
+def write_summary_csv(path: Path, rows: list[dict[str, Any]]) -> None:
+    metrics = summary_metrics(rows)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8-sig", newline="") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(["model", *metrics])
+        for row in rows:
+            writer.writerow(
+                [
+                    row["model"],
+                    *[
+                        format_summary_value(row["metrics"].get(metric))
+                        for metric in metrics
+                    ],
+                ]
+            )
+    print(f"Wrote summary CSV to {path}")
+
+
+def write_summaries_from_metrics_dir(
+    eval_dir: Path,
+    json_path: Path,
+    csv_path: Path,
+) -> None:
+    rows = [
+        {
+            "model": model_name_from_metrics_path(metrics_path),
+            "metrics": flatten_metrics(json.loads(metrics_path.read_text(encoding="utf-8"))),
+        }
+        for metrics_path in sorted(eval_dir.glob("*.metrics.json"))
+    ]
+
+    if rows:
+        write_summary_json(json_path, rows)
+        write_summary_csv(csv_path, rows)
+    else:
+        print(f"Warning: no *.metrics.json files found in {eval_dir}; skipped summaries.")
 
 
 def get_prediction_paths(args: argparse.Namespace) -> list[Path]:
@@ -692,6 +808,7 @@ def main() -> int:
         )
 
     gold_by_id = load_gold(args.gold_csv, args.gold_encoding)
+    wrote_metrics = False
 
     for predictions_path in prediction_paths:
         if not predictions_path.exists():
@@ -710,6 +827,14 @@ def main() -> int:
             args=args,
             output_json=output_json,
             output_md=output_md,
+        )
+        wrote_metrics = True
+
+    if wrote_metrics:
+        write_summaries_from_metrics_dir(
+            DEFAULT_EVAL_DIR,
+            DEFAULT_SUMMARY_JSON,
+            DEFAULT_SUMMARY_CSV,
         )
 
     return 0

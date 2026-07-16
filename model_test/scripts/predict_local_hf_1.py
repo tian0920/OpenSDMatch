@@ -18,19 +18,19 @@ DEFAULT_PROMPT = ROOT / "model_test" / "prompts" / TYPE / "sd_model_predict_labe
 DEFAULT_MODEL_DIR = ROOT / "models" / "hf"
 DEFAULT_OUTPUT_DIR = ROOT / "model_test" / "model_outputs" / TYPE
 DEFAULT_MODELS = [
-    "deepseek-r1-distill-qwen-7b",
-    "DeepSeek-R1-Distill-Qwen-1.5B",
-    "gemma-3-12b-it",
-    "gemma-4-26B-A4B-it",
-    "qwen3-2b",
-    "phi-4",
-    "phi-4-mini-instruct",
+    # "deepseek-r1-distill-qwen-7b",
+    # "DeepSeek-R1-Distill-Qwen-1.5B",
+    # "gemma-3-12b-it",
+    # "gemma-4-26B-A4B-it",
+    # "qwen3-2b",
+    # "phi-4",
+    # "phi-4-mini-instruct",
     # "mistral-7b-instruct-v0.3",
-    # "mistral-small-3.2-24b-instruct",
-    # "qwen3-4b",
-    # "qwen3-8b",
-    # "llama-3.1-8b-instant",
-    # "Llama-3.2-3B-Instruct",
+    "mistral-small-3.2-24b-instruct",
+    "qwen3-4b",
+    "qwen3-8b",
+    "llama-3.1-8b-instant",
+    "Llama-3.2-3B-Instruct",
 ]
 MODEL_REPO_HINTS = {
     "DeepSeek-R1-Distill-Qwen-1.5B": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
@@ -240,19 +240,65 @@ def gold_labels(row: dict[str, str]) -> dict[str, Any] | None:
     return labels
 
 
+def model_type_from_config(model_path: Path) -> str | None:
+    """Read model_type without instantiating a model or downloading anything."""
+    try:
+        with (model_path / "config.json").open(encoding="utf-8") as handle:
+            config = json.load(handle)
+    except (OSError, json.JSONDecodeError):
+        return None
+    model_type = config.get("model_type")
+    return model_type if isinstance(model_type, str) else None
+
+
+def build_mistral3_text_inputs(tokenizer: Any, prompt: str, torch: Any, device: Any) -> dict[str, Any]:
+    """Encode a text-only Mistral3 turn with the official Tekken tokenizer."""
+    from mistral_common.protocol.instruct.messages import UserMessage
+    from mistral_common.protocol.instruct.request import ChatCompletionRequest
+
+    request = ChatCompletionRequest(messages=[UserMessage(content=prompt)])
+    tokenized = tokenizer.encode_chat_completion(request)
+    input_tensor = torch.tensor([tokenized.tokens], dtype=torch.long, device=device)
+    return {
+        "input_ids": input_tensor,
+        "attention_mask": torch.ones_like(input_tensor),
+    }
+
+
 def run_model(
     args: argparse.Namespace,
     model_arg: str,
     discovered_models: dict[str, Path],
     torch: Any,
     auto_model_for_causal_lm: Any,
+    mistral3_for_conditional_generation: Any,
     auto_tokenizer: Any,
 ) -> None:
     model_path = resolve_model_path(model_arg, args.model_dir, discovered_models)
     model_name = safe_output_name(model_path)
 
-    tokenizer = auto_tokenizer.from_pretrained(model_path, trust_remote_code=args.trust_remote_code)
-    model = auto_model_for_causal_lm.from_pretrained(
+    model_type = model_type_from_config(model_path)
+    if model_type == "mistral3":
+        try:
+            from mistral_common.tokens.tokenizers.mistral import MistralTokenizer
+        except ImportError as exc:
+            raise SystemExit(
+                "Mistral3 requires mistral-common>=1.6.2; install it with: "
+                "python -m pip install 'mistral-common>=1.6.2'"
+            ) from exc
+        tokenizer = MistralTokenizer.from_file(model_path / "tekken.json")
+    else:
+        tokenizer = auto_tokenizer.from_pretrained(model_path, trust_remote_code=args.trust_remote_code)
+    # Mistral Small 3.1/3.2 uses the multimodal Mistral3 architecture, whose
+    # config is intentionally not registered with AutoModelForCausalLM.  Text-
+    # only generation still works through Mistral3ForConditionalGeneration.
+    model_class = (
+        mistral3_for_conditional_generation
+        if model_type == "mistral3"
+        else auto_model_for_causal_lm
+    )
+    print(f"model_type: {model_type or 'unknown'}; loader: {model_class.__name__}")
+    model = model_class.from_pretrained(
         model_path,
         torch_dtype=torch.bfloat16 if torch.cuda.is_available() else torch.float32,
         device_map=args.device_map,
@@ -275,19 +321,29 @@ def run_model(
     with output_path.open("w", encoding="utf-8") as out, compact_output_path.open("w", encoding="utf-8") as compact_out:
         for index, row in enumerate(rows, 1):
             prompt = build_prompt(prompt_template, row)
-            messages = [{"role": "user", "content": prompt}]
-            text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-            inputs = tokenizer([text], return_tensors="pt").to(model.device)
+            if model_type == "mistral3":
+                inputs = build_mistral3_text_inputs(tokenizer, prompt, torch, model.device)
+            else:
+                messages = [{"role": "user", "content": prompt}]
+                text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+                inputs = tokenizer([text], return_tensors="pt").to(model.device)
             generation_kwargs = {
                 "max_new_tokens": args.max_new_tokens,
                 "do_sample": args.temperature > 0,
-                "pad_token_id": tokenizer.eos_token_id,
+                "pad_token_id": (
+                    tokenizer.instruct_tokenizer.tokenizer.eos_id
+                    if model_type == "mistral3"
+                    else tokenizer.eos_token_id
+                ),
             }
             if args.temperature > 0:
                 generation_kwargs["temperature"] = args.temperature
             generated = model.generate(**inputs, **generation_kwargs)
-            output_ids = generated[0][inputs.input_ids.shape[-1] :]
-            raw = tokenizer.decode(output_ids, skip_special_tokens=True).strip()
+            output_ids = generated[0][inputs["input_ids"].shape[-1] :]
+            if model_type == "mistral3":
+                raw = tokenizer.decode(output_ids.tolist()).strip()
+            else:
+                raw = tokenizer.decode(output_ids, skip_special_tokens=True).strip()
             try:
                 prediction = extract_json(raw)
                 parse_error = None
@@ -342,13 +398,21 @@ def main() -> int:
 
     # Imported lazily so CSV/prompt validation still works before installing inference deps.
     import torch
-    from transformers import AutoModelForCausalLM, AutoTokenizer
+    from transformers import AutoModelForCausalLM, AutoTokenizer, Mistral3ForConditionalGeneration
 
     print(f"models: {', '.join(models)}")
     for index, model_arg in enumerate(models, 1):
         if len(models) > 1:
             print(f"\n=== model {index}/{len(models)}: {model_arg} ===")
-        run_model(args, model_arg, discovered_models, torch, AutoModelForCausalLM, AutoTokenizer)
+        run_model(
+            args,
+            model_arg,
+            discovered_models,
+            torch,
+            AutoModelForCausalLM,
+            Mistral3ForConditionalGeneration,
+            AutoTokenizer,
+        )
 
     return 0
 
